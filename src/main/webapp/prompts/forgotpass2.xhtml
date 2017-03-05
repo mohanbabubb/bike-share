@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Need Email ID for password recovery!</title>
+    </h:head>
+
+
+    <div class="container">
+        <ui:insert name="nav_bar">
+            <ui:include src="../templates/default/nav_bar.xhtml" />
+        </ui:insert>
+        <h:body>
+            <h:form> 
+                <div class="panel panel-default">
+                    <br/>
+                    <br/>
+                    <table class="panel-default col-sm-offset-3">
+                        <tr>
+                            <td align="left" >
+                                <h:outputLabel value="Email ID here:" /></td>
+                            <td>
+                                <h:inputText value="#{forgotbean.email}"
+                                         id="email"
+                                         autocomplete="off"
+                                         required="true"
+                                         class="form-control"
+                                         requiredMessage="Email is required"
+                                         validatorMessage="Invalid Email">
+                                <f:validateRegex pattern="[a-zA-Z0-9]+@[a-zA-Z]+.[a-zA-Z]{2,3}"></f:validateRegex>  
+                                </h:inputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><h:commandButton class="btn btn-sm btn-primary" action="#{forgotbean.forgotcheck('email')}" value="submit"></h:commandButton></td>
+                        </tr>
+                    </table>
+                    <center>
+                        <a>Forgot Email? Mail us at admin@bikeshare </a>
+                        <br/>
+                        <br/>
+                    </center>
+                </div>
+            </h:form>
+
+        </h:body>
+
+    </div>
+</html>

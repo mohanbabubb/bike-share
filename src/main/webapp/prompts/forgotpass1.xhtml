@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Need Username for password recovery!</title>
+    </h:head>
+
+
+    <div class="container">
+        <ui:insert name="nav_bar">
+            <ui:include src="../templates/default/nav_bar.xhtml" />
+        </ui:insert>
+        <h:body>
+            <h:form> 
+                <div class="panel panel-default">
+                    <br/>
+                    <br/>
+                    <table class="panel-default col-sm-offset-3">
+                        <tr>
+                            <td align="left">
+                                <h:outputLabel value="UserName here:" /></td>
+                            <td>
+                                <h:inputText value="#{forgotbean.userName}"
+                                             id="userName"
+                                             class="form-control"
+                                             autocomplete="off"
+                                             required="true"
+                                             requiredMessage="User Name is required" >
+                                    <f:validateLength minimum="4" maximum="12" for="userName"></f:validateLength>
+
+                                </h:inputText>
+                            </td>
+                        </tr>
+                        <br/>
+                        <tr>
+                            <td><h:commandButton class="btn btn-sm btn-primary" action="#{forgotbean.forgotcheck('user')}" value="submit"></h:commandButton></td>
+                        </tr>
+
+                    </table>
+                    <center>
+                        <h:button class="btn btn-sm btn-link" value="Forgot Username? Then Try recover using your email!" outcome="forgotpass2"/>
+                        <br/>
+                        <br/>
+                    </center>
+                </div>
+            </h:form>
+
+        </h:body>
+
+    </div>
+</html>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Book a Bike</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+
+    <div class="container">
+        <h:body>
+            <ui:insert name="nav_bar">
+                <ui:include src="../templates/default/nav_bar_1.xhtml" />
+            </ui:insert>
+            <br/>
+            <br/>
+            <div class="container">
+
+                <ul class="nav nav-tabs">
+                    <li role="presentation">
+                        <h:outputLink  rendered="#{bean1.name == null}" value="../home.xhtml">Dashboard</h:outputLink>
+                    </li>
+                    <li role="presentation">
+                        <h:outputLink  rendered="#{bean1.name == null}" value="share.xhtml">Share a Bike</h:outputLink>
+                    </li>
+                    <li class="active" role="presentation"><h:outputLink  rendered="#{bean1.name == null}" value="book.xhtml">Book a Bike</h:outputLink></li>
+                    <li role="presentation"><h:outputLink  rendered="#{bean1.name == null}" value="history.xhtml">History</h:outputLink></li>
+                    <li role="presentation"><h:outputLink  rendered="#{bean1.name == null}" value="myprofile.xhtml">Profile</h:outputLink></li>
+                </ul>
+                <br/>
+                <h:form>
+
+
+
+                    <div class="col-lg-4">
+                        <div class="panel panel-danger">
+                            <!-- Default panel contents -->
+                            <div class="panel-heading">Current bookings</div>
+                            <div class="panel-body"><p>The bikes currently booked by you.</p>
+                            </div>
+
+                            <!-- Table -->
+                            <h:dataTable class="table table-striped table-bordered" value="#{CurrentBook.currentBookings}" var="share" border="2">
+                                <h:column>
+                                    <f:facet name="header">Model Name</f:facet>#{share.modelname}
+                                </h:column> 
+                                <h:column>
+                                    <f:facet name="header">Type</f:facet>#{share.bike_type}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Booked Date</f:facet>#{share.booked_date}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Owner Contact</f:facet>#{share.mobileNo}
+                                </h:column>
+                            </h:dataTable>
+                            <br/>
+                        </div>
+                    </div> 
+                    <div class="col-lg-8">
+                        <div class="panel panel-primary">
+                            <!-- Default panel contents -->
+                            <div class="panel-heading">Book a Bike</div>
+                            <div class="panel-body"><p>Bikes available for booking</p>
+                            </div>
+
+                            <!-- Table -->
+                            <h:dataTable class="table table-striped table-bordered" value="#{BookBike.bookBikeList}" var="share" border="2">
+                                <h:column>
+                                    <f:facet name="header">Bike Registered No</f:facet>#{share.id}
+                                </h:column> 
+                                <h:column>
+                                    <f:facet name="header">Model Name</f:facet>#{share.modelname}
+                                </h:column> 
+                                <h:column>
+                                    <f:facet name="header">Type</f:facet>#{share.type}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Condition</f:facet>#{share.conditionstatus}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Comment</f:facet>#{share.comments}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Owner</f:facet>#{share.bikeowner}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Available Date slots<br/>( View / Book )</f:facet>
+                                    <h:commandButton type="submit" class="btn btn-success" value="Show slots" action="#{bookdatettime.set_book_rend_viewbook(share.id)}"/>
+                                </h:column>
+                            </h:dataTable>
+                            <br/>
+                        </div>
+                    </div>
+
+                </h:form>
+
+                <!-- Modal -->
+                <div class="modal fade" id="viewbikedetails" role="dialog">
+                    <ui:insert name="viewbikedetails">
+                        <ui:include src="book_bikes/viewbikedetails.xhtml" />
+                    </ui:insert>
+                </div>
+
+
+            </div>    
+
+            <br/>
+        </h:body>
+    </div>
+</html>

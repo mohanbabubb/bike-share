@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Register</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <body>
+        <div class="container">
+            <ui:insert name="nav_bar">
+                <ui:include src="/templates/default/nav_bar.xhtml" />
+            </ui:insert>
+            <br/><br/>
+            <h:form class="form-horizontal">
+                <fieldset>
+                    <div id="legend">
+                        <legend class="">Register</legend>
+                    </div>
+                    <div class="control-group">
+                        <!-- Username -->
+                        <label   for="username">Username</label>
+                        <div class="controls">
+                            <h:inputText value="#{registerbean.userName}"
+                                         id="userName"
+                                         autocomplete="off"
+                                         required="true"
+                                         requiredMessage="User Name is required"
+                                         validatorMessage="User Name should be of length from 4 to 12 chars" >
+                                <f:validateLength minimum="4" maximum="12" for="userName">
+                                </f:validateLength>
+                            </h:inputText>
+                            <p class="help-block">Username can contain any letters or numbers, without spaces</p>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <!-- E-mail -->
+                        <label class="control-label" for="email">E-mail</label>
+                        <div class="controls">
+                            <h:inputText value="#{registerbean.email}"
+                                         id="email"
+                                         autocomplete="off"
+                                         required="true"
+                                         requiredMessage="Email is required"
+                                         validatorMessage="Invalid Email">
+                                <f:validateRegex pattern="[a-zA-Z0-9]+@[a-zA-Z]+.[a-zA-Z]{2,3}"></f:validateRegex>  
+                            </h:inputText>
+                            <p class="help-block">Please provide your E-mail</p>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <!-- Password-->
+                        <label class="control-label" for="password">Password</label>
+                        <div class="controls">
+                            <h:inputSecret id="password" value="#{registerbean.password}"
+                                           autocomplete="off"
+                                           required="true"      
+                                           requiredMessage="password is required"   
+                                           validatorMessage="password should match with conform password" >    
+                                <f:validateLength minimum="4" maximum="34" for="password">
+                                </f:validateLength>   
+                            </h:inputSecret>
+                            <p class="help-block">Password should be at least 4 characters</p>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <!-- Password -->
+                        <label class="control-label"  for="password_confirm">Password (Confirm)</label>
+                        <div class="controls">
+                            <h:inputSecret id="password2" value="#{registerbean.password2}"
+                                           autocomplete="off"
+                                           required="true"      
+                                           requiredMessage="password is required"   
+                                           validatorMessage="password should match with conform password" >    
+                                <f:validateLength minimum="4" maximum="34" for="password2">
+                                </f:validateLength>   
+                            </h:inputSecret>
+                            <p class="help-block">Please confirm password</p>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label"  for="security_question">Security Question</label>
+                        <div class="controls">
+                            <h:selectOneMenu
+                                value="#{registerbean.questions}" style="font-size: 15px; 
+                                font-family: Verdana, Arial,sans-serif;width:208px; height:26px;" >
+                                <f:selectItem itemValue="What is your favourite pet name?" itemLabel="What is your favourite pet name?" />
+                                <f:selectItem itemValue="What is your born city name?" itemLabel="What is your born city name?" />
+                                <f:selectItem itemValue="What is your favorite sport?" itemLabel="What is your favorite sport?" />
+                            </h:selectOneMenu>
+                            <p class="help-block">Please confirm password</p>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label"  for="security_answers">Security Answers</label>
+                        <div class="controls">
+                            <h:inputText id="answers" style="width:200px; "
+                                         value="#{registerbean.answers}" 
+                                         autocomplete="off"
+                                         required="true"      
+                                         requiredMessage=" answers  is required"   
+                                         validatorMessage=" answers should be of length from 3 to 30 chars" >    
+                                <f:validateLength minimum="3" maximum="30" for="answers"></f:validateLength>
+                            </h:inputText>
+                            <p class="help-block">Please provide security answers</p>
+                        </div>
+                    </div>
+
+                </fieldset>
+                <h:commandButton value="submit" action="#{registerbean.addUser()}" ></h:commandButton>
+
+            </h:form>
+        </div>
+    </body>
+</html>

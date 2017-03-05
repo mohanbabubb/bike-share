@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Logged Out.</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <div class="container">
+        <h:body>
+            <ui:insert name="nav_bar">
+                <ui:include src="/templates/default/nav_bar_1.xhtml" />
+            </ui:insert>
+            <br/>
+            <br/>
+            <div>Thanks for visiting. Bike Share. See you back. Soon!!!</div>
+            <h:form>
+                <h:commandButton class="btn btn-danger" action="#{loginbean.logout()}" value="Click Here to LOGOUT.!!!" />
+            </h:form>
+        </h:body>
+    </div>
+
+</html>

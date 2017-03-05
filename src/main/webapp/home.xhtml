@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:ui="http://java.sun.com/jsf/facelets" > 
+    <h:head>
+        <title>Home!</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+
+    <div class="container">
+        <h:body>
+            <ui:insert name="nav_bar">
+                <ui:include src="templates/default/nav_bar_1.xhtml" />
+            </ui:insert>
+            <br/>
+            <br/>
+            <ul class="nav nav-tabs">
+                <li class="active" role="presentation">
+                    <h:outputLink  rendered="#{bean1.name == null}" value="home.xhtml">Dashboard</h:outputLink>
+                </li>
+                <li role="presentation">
+                    <h:outputLink  rendered="#{bean1.name == null}" value="home/share.xhtml">Share a Bike</h:outputLink>
+                </li>
+                <li role="presentation"><h:outputLink  rendered="#{bean1.name == null}" value="home/book.xhtml">Book a Bike</h:outputLink></li>
+                <li role="presentation"><h:outputLink  rendered="#{bean1.name == null}" value="home/history.xhtml">History</h:outputLink></li>
+                <li role="presentation"><h:outputLink  rendered="#{bean1.name == null}" value="home/myprofile.xhtml">Profile</h:outputLink></li>
+            </ul>
+        </h:body>
+
+
+        <!--
+        Need to add table to show the count of bikes shared, count of booked rides, Earned credits
+        -->
+        <div class="container">
+            <br/>
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading"><h4>Shared bikes</h4></div>
+                    <div class="panel-body">
+                        
+                        
+
+                    <center>    
+                        <button class="btn btn-primary" type="button">
+                            Number of Shared bikes by you: <span class="badge">#{bike.fetchUserSharedCount("a")}</span> <!--// a= shared bikes -->
+                        </button>
+                    </center>
+                        
+                    </div>
+
+<!--                     Table 
+                    <table class="table table-hover">
+
+                    </table>
+                    <center>
+                        <h:outputLink class="btn btn-primary" role="button" rendered="#{bean1.name == null}" value="home.xhtml">Add Bikes</h:outputLink>
+                    </center>-->
+                    <br/>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading"><h4>Booked bikes</h4></div>
+                    <div class="panel-body">
+
+
+                    <center>    
+                        <button class="btn btn-primary" type="button">
+                            Currently Booked bikes: <span class="badge">#{bike.fetchUserSharedCount("c")}</span> <!--// b= booked bikes -->
+                        </button>
+                        <br/>
+                        <br/>
+                        <button class="btn btn-primary" type="button">
+                            Total Number of Booked bikes(with history): <span class="badge">#{bike.fetchUserSharedCount("b")}</span> <!--// b= booked bikes -->
+                        </button>
+                    </center>
+                    <!--                         Table 
+                                            <table class="table table-hover">
+                                            
+                                            </table>
+                                            <center>
+                                                <h:outputLink class="btn btn-primary" role="button" rendered="#{bean1.name == null}" value="home.xhtml">Book More</h:outputLink>
+                                            </center>-->
+                    <br/>
+                                        </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading"><h4>Credits Earned</h4></div>
+                    <div class="panel-body">
+                        <center>    
+                            <button class="btn btn-primary" type="button">
+                                Total Credits: <span class="badge">#{creditbean.fetchUserCredits()}</span>
+                            </button>
+                        </center>
+                    </div>
+
+                    <!--                         Table 
+                                            <table class="table table-hover">
+                                            
+                                            </table>
+                                            <center>
+                                                <h:outputLink class="btn btn-primary" role="button" rendered="#{bean1.name == null}" value="home.xhtml">Earn more</h:outputLink>
+                                            </center>-->
+                    <br/>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</html>

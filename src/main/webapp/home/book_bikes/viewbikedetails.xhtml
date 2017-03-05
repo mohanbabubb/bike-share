@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <h:body>
+        <div class="container">
+            <ui:insert name="nav_bar">
+                <ui:include src="../../templates/default/nav_bar_1.xhtml" />
+            </ui:insert>
+
+            <h:form>
+                <div class="container">
+                    <div class="col-md-6"><br/>
+                        <h:outputLink value="#{request.contextPath}/home/book.xhtml"><h:graphicImage value="#{resource['images:back.png']}" width="50px" height="50px" style="background: white"/></h:outputLink>
+                        <br/>
+                        <br/>
+                        <div class="panel panel-primary">  
+                   <!-- Default panel contents -->
+                    <div class="panel-heading">Available dates</div>
+                    <div class="panel-body">
+                        <p>Book a bike on available shared dates below </p>
+                    </div>
+                            <h:dataTable class="table table-striped table-bordered" value="#{bookdatettime.viewDateSlots(bookdatettime.bike_id)}" var="sdt" border="2">
+                                <h:column>
+                                    <f:facet name="header" >Shared date</f:facet>
+                                    <h:outputText value="#{sdt.sharedate}" >
+                                        <f:convertDateTime dateStyle="full" timeZone="Asia/Singapore" type="date" />
+                                    </h:outputText>
+                                </h:column> 
+                                <h:column>
+                                    <f:facet name="header">Notes</f:facet>#{sdt.notes}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Booking Status</f:facet>#{sdt.bookingstatus}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Book it</f:facet>
+                                    <h:commandButton onclick="if (! confirm('Once Booked slot cannot be reverted/release? Press OK, if sure.')) return false" type="submit" class="btn btn-success" value="Book IT" action="#{bookdatettime.bookDateslot(sdt.bike_id, sdt.share_book_id)}"/>
+                                </h:column>
+                            </h:dataTable>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+        </div>
+    </h:body>
+</html>

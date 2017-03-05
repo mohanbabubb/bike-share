@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Share Data and Time for a Bike</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+
+    <div class="container">
+        <h:body>
+            <ui:insert name="nav_bar">
+                <ui:include src="../templates/default/nav_bar_1.xhtml" />
+            </ui:insert>
+            <br/>
+            <br/>
+            <div class="container">
+
+                <ul class="nav nav-tabs">
+                    <li role="presentation">
+                        <h:outputLink  rendered="#{bean1.name == null}" value="home.xhtml">Dashboard</h:outputLink>
+                    </li>
+                    <li class="active" role="presentation">
+                        <h:outputLink  rendered="#{bean1.name == null}" value="share.xhtml">Share a Bike</h:outputLink>
+                    </li>
+                    <li role="presentation"><h:outputLink  rendered="#{bean1.name == null}" value="book.xhtml">Book a Bike</h:outputLink></li>
+                    <li role="presentation"><h:outputLink  rendered="#{bean1.name == null}" value="history.xhtml">History</h:outputLink></li>
+                    <li role="presentation"><h:outputLink  rendered="#{bean1.name == null}" value="myprofile.xhtml">Profile</h:outputLink></li>
+                </ul>
+                <div class="container">
+                    <br/>
+
+                    <div class="col-lg-12">
+                        <div class="panel panel-primary">
+                            <!-- Default panel contents -->
+                            <div class="panel-heading">Selected Bike Details</div>
+                            <!-- Table -->
+                            <h:dataTable class="table table-bordered" value="#{bike.bikes}" var="share" border="2">
+                                <h:column>
+                                    <f:facet name="header">Bike No:</f:facet>#{share.id}
+                                </h:column> 
+                                <h:column>
+                                    <f:facet name="header">Model Name</f:facet>#{share.modelname}
+                                </h:column> 
+                                <h:column>
+                                    <f:facet name="header">Type</f:facet>#{share.type}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Condition</f:facet>#{share.conditionstatus}
+                                </h:column>
+                            </h:dataTable>
+                            <br/>
+                        </div>
+                    </div>
+
+                    <ul class="nav nav-tabs">
+                        <li class="active" role="presentation">
+                            <h:outputLink  rendered="#{bean1.name == null}" value="sharedatetime.xhtml">Time Slots</h:outputLink>
+                        </li>
+                    </ul>
+                    <div class="panel panel-default">
+                      <!-- Default panel contents -->
+                      <div class="panel-heading">NOTICE:</div>
+                      <div class="panel-body">
+                        <p></p>
+                      </div>
+                      </div>
+                    
+                    <div class="col-lg-12">
+                        <div class="panel panel-primary">
+                            <!-- Default panel contents -->
+                            <div class="panel-body">
+                                <a type="button" class="btn btn-success" href="addsharedatetime.xhtml">Add Time Slot</a>
+                                
+                            </div>
+
+                            <!-- Table -->
+                            <h:dataTable class="table table-bordered" value="#{bike.bikes}" var="share" border="2">
+                                <h:column>
+                                    <f:facet name="header">Date</f:facet>#{share.id}
+                                </h:column> 
+                                <h:column>
+                                    <f:facet name="header">Sharing Date</f:facet>#{share.modelname}
+                                </h:column> 
+                                <h:column>
+                                    <f:facet name="header">Status</f:facet>#{share.conditionstatus}
+                                </h:column>
+                            </h:dataTable>
+
+                            <br/>
+                            
+                        </div>
+                    </div>
+
+                    <br/>
+                </div>
+            </div>
+        </h:body>
+    </div>
+</html>

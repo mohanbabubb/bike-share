@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Update profile</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+
+    <div class="container">
+        <h:body>
+            <ui:insert name="nav_bar">
+                <ui:include src="../templates/default/nav_bar_1.xhtml" />
+            </ui:insert>
+            <br/>
+            <br/>
+            
+                        <ul class="nav nav-tabs">
+                <li role="presentation">
+                    <h:outputLink  rendered="#{bean1.name == null}" value="#{request.contextPath}/home.xhtml">Dashboard</h:outputLink>
+                </li>
+                <li role="presentation">
+                    <h:outputLink  rendered="#{bean1.name == null}" value="#{request.contextPath}/home/share.xhtml">Share a Bike</h:outputLink>
+                </li>
+                <li role="presentation"><h:outputLink  rendered="#{bean1.name == null}" value="#{request.contextPath}/home/book.xhtml">Book a Bike</h:outputLink></li>
+                <li role="presentation"><h:outputLink  rendered="#{bean1.name == null}" value="#{request.contextPath}/home/history.xhtml">History</h:outputLink></li>
+                <li class="active" role="presentation"><h:outputLink  rendered="#{bean1.name == null}" value="#{request.contextPath}/home/myprofile.xhtml">Profile</h:outputLink></li>
+            </ul>
+            <f:metadata>
+                <f:viewAction action="#{registerbean.onload}" />
+            </f:metadata> 
+            <div class="container">
+                    <br/><br/>
+                    <h:form>
+                        <table>
+                            <tr>
+                                <td align="left">
+                                    <h:outputLabel value="User Name:" />
+                                </td>
+                                <td>
+                                    <h:inputText value="#{registerbean.userName}"
+                                                 id="userName"
+                                                 autocomplete="off"
+                                                 disabled="true"
+                                                 required="true"
+                                                 requiredMessage="User Name is required"
+                                                 validatorMessage="User Name should be of length from 4 to 12 chars" >
+                                        <f:validateLength minimum="4" maximum="12" for="userName">
+                                        </f:validateLength>
+                                    </h:inputText>
+                                </td>
+                            </tr>
+
+                            <tr> 
+                                <td align="left">            
+                                    <h:outputLabel for="pwd1" value=" Password: "/>
+                                </td>  
+
+                                <td>
+                                    <h:inputSecret id="pwd1" value="#{registerbean.password}"
+                                                   autocomplete="off"
+                                                   required="true"      
+                                                   requiredMessage="password is required"   
+                                                   validatorMessage="password should match with conform password" >    
+                                        <f:validateLength minimum="4" maximum="34" for="pwd1">
+                                        </f:validateLength>   
+                                    </h:inputSecret>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td align="left">  
+                                    <h:outputLabel for="pwd2" value="Conform Password:" />
+                                </td>
+
+                                <td> 
+                                    <h:inputSecret id="pwd2" value="#{registerbean.password2}"
+                                                   autocomplete="off"
+                                                   required="true"      
+                                                   requiredMessage="password is required"   
+                                                   validatorMessage="password should match with conform password" >    
+                                        <f:validateLength minimum="4" maximum="34" for="pwd2">
+                                        </f:validateLength>   
+                                    </h:inputSecret>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td align="left">
+                                    <h:outputText value="Security Question" style="width:190px"></h:outputText><b></b>
+                                </td>
+                                <td>
+                                    <h:selectOneMenu 
+                                        value="#{registerbean.questions}" style="font-size: 15px; 
+                                        font-family: Verdana, Arial,sans-serif;width:208px; height:26px;" >
+                                        <f:selectItem itemValue="What is your favourite pet name?" itemLabel="What is your favourite pet name?" />
+                                <f:selectItem itemValue="What is your born city name?" itemLabel="What is your born city name?" />
+                                <f:selectItem itemValue="What is your favorite sport?" itemLabel="What is your favorite sport?" />
+                                    </h:selectOneMenu>
+                                </td>
+                            </tr>
+
+                            <tr>  
+                                <td align="left">
+                                    <h:outputText value="Security Answer" style="width:190px"></h:outputText><b></b>
+                                </td>
+
+                                <td>
+                                    <h:inputText id="answers" style="width:200px; "
+                                                 value="#{registerbean.answers}" 
+                                                 autocomplete="off"
+                                                 required="true"      
+                                                 requiredMessage=" answers  is required"   
+                                                 validatorMessage=" answers should be of length from 3 to 30 chars" >    
+                                        <f:validateLength minimum="3" maximum="30" for="answers"></f:validateLength>   
+                                    </h:inputText>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td align="left">
+                                    <h:outputLabel value="First Name:" />
+                                </td>
+                                <td>
+                                    <h:inputText value="#{registerbean.firstname}"
+                                                 id="firstName"
+
+                                                 autocomplete="off"
+                                                 required="true"
+                                                 requiredMessage="First Name is required"
+                                                 validatorMessage="FirstName should be of length from 3 to 15 chars">
+                                        <f:validateLength minimum="3" maximum="15" for="firstName"></f:validateLength>
+                                    </h:inputText>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td align="left">
+                                    <h:outputLabel value="Last Name:" />
+                                </td>
+                                <td><h:inputText value="#{registerbean.lastname}"
+                                                 id="lastName"
+
+                                                 autocomplete="off"
+                                                 required="true"
+                                                 requiredMessage="Last Name is required"
+                                                 validatorMessage="Last Name should be of length from 2 to 11 chars">
+                                        <f:validateLength minimum="2" maximum="11" for="lastName"></f:validateLength>
+                                    </h:inputText></td>
+                            </tr>
+
+                            <tr>
+                                <td align="left" >
+                                    <h:outputLabel value="Mobile No:" />
+                                </td>
+                                <td> <h:inputText value="#{registerbean.mobileNo}"
+                                                  id="mobileNo"
+                                                  autocomplete="off"
+                                                  required="true"
+                                                  requiredMessage="Mobile No is required"
+                                                  validatorMessage="Mobile No should be of length from 10 to 12 chars">
+                                        <f:validateLength minimum="8" maximum="12" for="mobileNo"></f:validateLength>
+                                    </h:inputText></td>
+                                <h:message for="mobileNo" />
+
+
+                            </tr>
+                            
+                            <tr>
+                                <td align="left">
+                                    <h:outputLabel value="Email:" />
+                                </td>
+                                <td> <h:inputText value="#{registerbean.email}"
+
+                                                  id="email"
+                                                  disabled="true"
+                                                  autocomplete="off"
+                                                  required="true"
+                                                  requiredMessage="Email is required"
+                                                  validatorMessage="Invalid Email">
+                                        <f:validateRegex pattern="[a-zA-Z0-9]+@[a-zA-Z]+.[a-zA-Z]{2,3}"></f:validateRegex>  
+                                    </h:inputText></td>
+                            </tr>
+                        </table>
+                        <h:commandButton value="submit" action="#{registerbean.updateUser()}" ></h:commandButton>
+                    </h:form>
+            </div>
+        </h:body>
+    </div>
+</html>
