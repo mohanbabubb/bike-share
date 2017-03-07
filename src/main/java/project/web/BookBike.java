@@ -109,7 +109,8 @@ public class BookBike implements Serializable{
         String string_val = session.getAttribute("username").toString();
 
         con = DBconnection.getConnection();
-        String sql = "SELECT bk.id,bk.modelname,bk.type,bk.comments,bk.conditionstatus,bk.sharestatus,us.user bikeowner FROM bikes bk,users us where bk.user_id=us.id and bk.sharestatus='on'";
+        //String sql = "SELECT bk.id,bk.modelname,bk.type,bk.comments,bk.conditionstatus,bk.sharestatus,us.user bikeowner FROM bikes bk,users us where bk.user_id=us.id and bk.sharestatus='on' and bk.deleted='no'";
+        String sql = "SELECT bk.id,bk.modelname,bk.type,bk.comments,bk.conditionstatus,bk.sharestatus,us.firstname bikeowner FROM bikes bk,users us where bk.user_id=us.id and bk.sharestatus='on' and bk.deleted='no' and us.user!='"+string_val+"'";
 
         try {
             ps = con.prepareStatement(sql);

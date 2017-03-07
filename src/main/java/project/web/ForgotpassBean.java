@@ -96,6 +96,31 @@ public class ForgotpassBean {
     public void setMessage(String message) {
         this.message = message;
     }
+    
+    
+    public String checkAnswer(String username,String question) throws SQLException{
+    
+            con = DBconnection.getConnection();
+        try {
+                String sql = "select user from users where user='"+username+"' and question='"+question+"' and answer='"+answers+"'";
+                ps = con.prepareStatement(sql);
+                rs = ps.executeQuery();
+                if (rs.next()) {    
+                    RecoverPassword(rs.getString("user"));
+                    return "passwordrecovery";
+                } else {
+                    return "forgotpass1-answerfailed";
+                }
+                
+                
+        }catch (Exception e) {
+        e.printStackTrace();
+        }finally{
+        close_connecitons();
+        }
+        return "forgotpass1-answerfailed";
+    }
+    
 
     public String forgotcheck(String type) {
 
@@ -116,6 +141,8 @@ public class ForgotpassBean {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }finally{
+            clear();
         }
            return "usernotexists";
     }
@@ -144,35 +171,51 @@ public class ForgotpassBean {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            DBconnection.close(con);
-            rs.close();
-            ps.close(); 
+            close_connecitons();
         }
         return false;
     }
     
     
-        public String RecoverPassword(String username) {
+        public void RecoverPassword(String username) throws SQLException {
 
         try {
 
             con = DBconnection.getConnection();
-            String sql = "select password from users where user='"+username+"'";
+            String sql = "select pass from users where user='"+username+"'";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             if (rs.next()) // found
             {
-                this.setPassword(rs.getString("password"));
-            }
-            
+                this.setPassword(rs.getString("pass"));
+            }   
         } catch (Exception ex) {
             ex.printStackTrace();
+        }finally{
+            //clear();
+            close_connecitons();
         }
-        return "passwordrecovery";
     }
     
         private void clear() {
             setPassword(null);
-            
     }
+        public void clear_all()
+        {
+            FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+            setUserName(null);
+            setEmail(null);
+            setQuestions(null);
+            setAnswers(null);
+            setPassword(null);
+            setEmail(null);
+        }
+        
+        private void close_connecitons() throws SQLException
+        {   
+            con.close();
+            rs.close();
+            ps.close();
+            
+        }
 }

@@ -145,6 +145,7 @@ public class Bike implements Serializable {
 //		 upload(fileName);
 //	 //    System.out.println("pravin");
         //int i = 0;
+
         int rowadded = 0;
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         String string_val = session.getAttribute("username").toString();
@@ -185,7 +186,7 @@ public class Bike implements Serializable {
         String string_val = session.getAttribute("username").toString();
 
         con = DBconnection.getConnection();
-        String sql = "SELECT id,modelname,type,comments,conditionstatus,sharestatus FROM bikes where user_id=(select id from users where user='" + string_val + "') ORDER By id asc";
+        String sql = "SELECT id,modelname,type,comments,conditionstatus,sharestatus FROM bikes where user_id=(select id from users where user='" + string_val + "') and deleted='no' ORDER By id asc";
 
         try {
             ps = con.prepareStatement(sql);
@@ -215,6 +216,8 @@ public class Bike implements Serializable {
             con.close();
         } catch (Exception e) {
             e.printStackTrace();
+        }finally{
+        clear();
         }
         ////        
         return bikes;
@@ -253,11 +256,11 @@ public class Bike implements Serializable {
         String string_val = session.getAttribute("username").toString();
 
         con = DBconnection.getConnection();
-        String sql = "DELETE FROM bikes where id=? and user_id=(select id from users where user=?)";
+        String sql = "Update bikes set deleted='yes' where id=? and user_id=(select id from users where user=?)";
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, bike_id);
-            ps.setString(2, string_val); // Decide how to get the user id from the session or from some where to redirect here.
+            ps.setString(2, string_val);
             rowdeleted = ps.executeUpdate();
             ps.close(); // All open connection to be closed.
         } catch (Exception e) {
@@ -290,7 +293,7 @@ public class Bike implements Serializable {
         String string_val = session.getAttribute("username").toString();
         con = DBconnection.getConnection();
         this.counterbb = 0;
-        String sql = "SELECT count(DISTINCT sab1.id) countvalue FROM shares_and_bookings sab1, bikes bk where bk.id=sab1.bike_id and sab1.bookingstatus='Booked' and sab1.share_date >= curdate() and bk.id='" + bikeinput + "' and bk.user_id=(select id from users where user='" + string_val + "') group by sab1.id";
+        String sql = "SELECT count(DISTINCT sab1.id) countvalue FROM shares_and_bookings sab1, bikes bk where bk.id=sab1.bike_id and sab1.bookingstatus='Booked' and sab1.share_date >= curdate() and bk.id='" + bikeinput + "' and bk.user_id=(select id from users where user='" + string_val + "') and bk.deleted='no' group by sab1.id";
         try {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -389,11 +392,11 @@ public class Bike implements Serializable {
         String sql = null;
         con = DBconnection.getConnection();
         if ("a".equals(select)) {
-            sql = "SELECT count(*) as justcount from bikes where user_id=(select id from users where user='" + string_val + "') and sharestatus='on'";
+            sql = "SELECT count(*) as justcount from bikes where user_id=(select id from users where user='" + string_val + "') and sharestatus='on' and deleted='no'";
         } else if ("b".equals(select)) {
-            sql = "SELECT count(*) as justcount from shares_and_bookings where booked_by=(select id from users where user='" + session.getAttribute("username").toString() + "') and bookingstatus='Booked'";
+            sql = "SELECT count(*) as justcount from shares_and_bookings where booked_by=(select id from users where user='" + session.getAttribute("username").toString() + "') and bookingstatus='Booked' ";
         } else if ("c".equals(select)) {
-            sql = "SELECT count(*) as justcount from shares_and_bookings where booked_by=(select id from users where user='" + session.getAttribute("username").toString() + "') and bookingstatus='Booked' and share_date >= curdate()";
+            sql = "SELECT count(*) as justcount from shares_and_bookings where booked_by=(select id from users where user='" + session.getAttribute("username").toString() + "') and bookingstatus='RideDone' and share_date <= curdate()";
         }
         try {
 
@@ -408,6 +411,8 @@ public class Bike implements Serializable {
             con.close();
         } catch (Exception e) {
             e.printStackTrace();
+        }finally{
+           //clear();
         }
 
         //} // if else        

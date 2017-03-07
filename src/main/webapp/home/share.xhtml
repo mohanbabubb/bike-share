@@ -74,7 +74,7 @@ and open the template in the editor.
                             <h:commandButton class="btn btn-danger" value="Delete" action="#{bike.checkAnyBookings(bk.id,'deletebike')}"/>
                         </h:column>
                         <h:column>
-                            <f:facet name="header">Sharing Date slots<br/>( View / Add / Edit / Delete )</f:facet>
+                            <f:facet name="header">Sharing Date slots<br/>( View / Add / Delete )</f:facet>
                             <h:commandButton class="btn btn-primary" value="Shared slots" action="#{bike.getBikeDetail(bk.id)}" disabled="#{bk.stopsharebutton}"/>
                         </h:column>
                         </h:dataTable>

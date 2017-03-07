@@ -222,7 +222,7 @@ public class ShareDateTimeBean {
 
         List<ShareDateTimeBean> viewtimeslots = new ArrayList<ShareDateTimeBean>();
         con = DBconnection.getConnection();
-        String sql = "SELECT id,share_date,bookingstatus,notes from shares_and_bookings where bike_id='" + bike_id_local + "' and share_date > curdate()";
+        String sql = "SELECT id,share_date,bookingstatus,notes from shares_and_bookings where bike_id='" + bike_id_local + "' and share_date >= curdate() and bookingstatus!='RideDone'";
 
         try {
             ps = con.prepareStatement(sql);

@@ -38,7 +38,17 @@ public class BookHistory implements Serializable {
     private String modelname;
     private Date booked_date;
     private String shared_by;
+    private String creditstatus;
 
+    public String getCreditstatus() {
+        return creditstatus;
+    }
+
+    public void setCreditstatus(String creditstatus) {
+        this.creditstatus = creditstatus;
+    }
+
+    
     public String getShared_by() {
         return shared_by;
     }
@@ -116,7 +126,7 @@ public class BookHistory implements Serializable {
 
         List<BookHistory> viewbookedlist = new ArrayList<BookHistory>();
         con = DBconnection.getConnection();     
-        String sql = "SELECT bk.modelname name,sb.share_date share_date,sb.booked_date bkdate,(select user from users u1 where u1.id=bk.user_id) shared_by FROM shares_and_bookings sb,bikes bk,users us WHERE sb.share_date < curdate() and bk.id=sb.bike_id and sb.bookingstatus in ('Booked')and us.id=sb.booked_by and us.id=(select id from users where user='"+string_val+"')";
+        String sql = "SELECT bk.modelname name,sb.share_date share_date,sb.booked_date bkdate,(select user from users u1 where u1.id=bk.user_id) shared_by FROM shares_and_bookings sb,bikes bk,users us WHERE bk.id=sb.bike_id and sb.bookingstatus in ('RideDone')and us.id=sb.booked_by and us.id=(select id from users where user='"+string_val+"')";
         try {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();

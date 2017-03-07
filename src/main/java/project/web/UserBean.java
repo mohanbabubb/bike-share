@@ -146,7 +146,7 @@ public class UserBean {
         //} // if else        
           if (rowadded > 0) {
               System.out.println("A new USER was added successfully!");
-              return "home";
+              return "register-success";
           }else
           {
               return "login";
@@ -181,14 +181,14 @@ public class UserBean {
           {
             e.printStackTrace();	
           }
-          
+          System.out.println(rowupdated);
         //} // if else        
           if (rowupdated > 0) {
               System.out.println("The profile is updated successfully!");
-              return "myprofile-failed";
+              return "myprofile-success";
           }else
           {
-              return "home";
+              return "myprofile-failed";
           }
     }
     

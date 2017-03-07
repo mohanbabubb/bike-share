@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -36,6 +37,16 @@ public class CurrentBook implements Serializable{
     private String shared_by;
     private int mobileNo;
     private String bike_type;
+    private String firstname;
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+    
 
     public int getShare_book_id() {
         return share_book_id;
@@ -126,7 +137,9 @@ public class CurrentBook implements Serializable{
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         String string_val = session.getAttribute("username").toString();
         con = DBconnection.getConnection();
-        String sql = "SELECT bk.modelname name,sb.share_date share_date,sb.booked_date bkdate,(select user from users u1 where u1.id=bk.user_id) shared_by,us.mobileNo mobileNo,bk.type biketype FROM shares_and_bookings sb,bikes bk,users us WHERE sb.share_date >= curdate() and bk.id=sb.bike_id and sb.bookingstatus in ('Booked')and us.id=sb.booked_by and sb.booked_by=(select id from users where user='" + string_val + "')";
+        String sql = "SELECT bk.modelname name,sb.share_date share_date,sb.booked_date bkdate,us.user shared_by,us.mobileNo mobileNo,us.firstname firstname,bk.type biketype,sb.bookingstatus bookingstatus,sb.id sbid,sb.bike_id sbbikeid "
+                + "FROM shares_and_bookings sb,bikes bk,users us "
+                + "WHERE bk.id=sb.bike_id and sb.bookingstatus='Booked' and bk.user_id=us.id and us.id!=(select id from users where user='"+string_val+"')";
         try {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -138,6 +151,10 @@ public class CurrentBook implements Serializable{
                 stb1.setShared_by(rs.getString("shared_by"));
                 stb1.setMobileNo(rs.getInt("mobileNo"));
                 stb1.setBike_type(rs.getString("biketype"));
+                stb1.setBookingstatus(rs.getString("bookingstatus"));
+                stb1.setShare_book_id(rs.getInt("sbid"));
+                stb1.setBike_id(rs.getInt("sbbikeid"));
+                stb1.setFirstname(rs.getString("firstname"));
                 //store all data into a Lists
                 currentbookedlist.add(stb1);
                 // All open connection to be closed.
@@ -153,7 +170,64 @@ public class CurrentBook implements Serializable{
         return currentbookedlist;
     }
     
+        public String RideDone(int share_book_id,int bike_id) throws SQLException {
+        int rowupdated = 0;
 
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        String string_val = session.getAttribute("username").toString();
+
+        con = DBconnection.getConnection();
+        String sql = "update users a "
+                + "JOIN shares_and_bookings b ON a.id=b.booked_by "
+                + "set a.credits=a.credits+5, b.bookingstatus='RideDone', b.creditstatus='Credited' "
+                + "where b.share_date <= curdate() and b.id=? and b.bike_id=? and a.user='"+string_val+"'";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, share_book_id);
+            ps.setInt(2, bike_id);
+            rowupdated = ps.executeUpdate();
+            System.out.println("Running from the credit 5"+sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //finally{
+        //clear();
+        //}
+                   if (rowupdated >0)
+                    {
+                        String sql1 = "update users a "
+						+ "JOIN bikes b ON a.id=b.user_id "
+						+ "JOIN shares_and_bookings c ON b.id=c.bike_id "
+						+ "set a.credits=a.credits+10 where c.bike_id="+bike_id+" and c.id="+share_book_id+"";
+                                    ps = con.prepareStatement(sql1);
+                                    ps.executeUpdate();      
+                                    System.out.println("Running from the credit 10"+sql);
+                        return "book";
+                    }else
+                    {
+
+                        con = DBconnection.getConnection();
+                        String sql3 = "update users a JOIN shares_and_bookings b on a.id=b.booked_by set b.bookingstatus='RideDone', b.creditstatus='Credited' where b.id=? and b.bike_id=? and a.user='"+string_val+"'";
+                        try {
+                            ps = con.prepareStatement(sql3);
+                            ps.setInt(1, share_book_id);
+                            ps.setInt(2, bike_id);
+                            rowupdated = ps.executeUpdate();
+                            System.out.println("Running No credit");
+                            ps.close(); // All open connection to be closed.
+                            con.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }finally{
+                        clear();
+                        ps.close(); // All open connection to be closed.
+                        con.close();
+                        }
+                        return "book-ride-done-nocredit";
+                    }
+
+    }
+    
     private void clear() {
         setBookingstatus(null);
         setSharedate(null);

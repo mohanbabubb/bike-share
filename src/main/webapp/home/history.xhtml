@@ -25,7 +25,7 @@ and open the template in the editor.
 
                 <ul class="nav nav-tabs">
                     <li role="presentation">
-                        <h:outputLink  rendered="#{bean1.name == null}" value="home.xhtml">Dashboard</h:outputLink>
+                        <h:outputLink  rendered="#{bean1.name == null}" value="../home.xhtml">Dashboard</h:outputLink>
                     </li>
                     <li role="presentation">
                         <h:outputLink  rendered="#{bean1.name == null}" value="share.xhtml">Share a Bike</h:outputLink>
@@ -41,6 +41,8 @@ and open the template in the editor.
                         <div class="panel-heading">Booking History</div>
                         <div class="panel-body">
                             <p>Bikes booked by you. Bookings which crossed the shared date will be listed here.</p>
+                            <br/>
+                            <p>Count's Here may differ from Dashboard. Dashboard calculates only the rides acknowledged after use ( after share date).</p>
                         </div>
 
                         <!-- Table -->
